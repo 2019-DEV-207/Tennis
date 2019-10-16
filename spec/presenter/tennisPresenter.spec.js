@@ -5,6 +5,11 @@ define(["../../src/presenter/tennisPresenter","../../src/view/tennisView"], func
 		let tennisView = new TennisView("#app");
     	let	tennisPresenter = new TennisPresenter(tennisView);
 
+    	afterEach(()=>{
+    		tennisPresenter.playerOneScore = 0;
+    		tennisPresenter.playerTwoScore = 0;
+    	});
+
 		it("should exist on application load", ()=>{
 
     		expect(tennisPresenter).toBeDefined();
@@ -31,6 +36,18 @@ define(["../../src/presenter/tennisPresenter","../../src/view/tennisView"], func
 			
 			expect(tennisView.updateScore).toHaveBeenCalled();
 			expect(tennisPresenter.playerTwoScore).toEqual(30);
+		});
+
+		it("should set winner when the game is not in deuce", ()=>{
+			spyOn(tennisView, "displayWinner");
+			tennisPresenter.playerOneScore = 30;
+			tennisPresenter.playerTwoScore = 40;
+
+			tennisPresenter.calculateScore("player2");
+
+			expect(tennisView.displayWinner).toHaveBeenCalled();
+			expect(tennisPresenter.winner).toEqual("player2");
+
 		});
     
     });

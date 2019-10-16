@@ -10,6 +10,8 @@ define(["../../src/view/tennisView"], function(TennisView) {
     	});
 
     	afterEach(()=>{
+            tennisView.tennisPresenter.playerOneScore = 0;
+            tennisView.tennisPresenter.playerTwoScore = 0;
     		tennisView = null;
     	});
 
@@ -43,6 +45,20 @@ define(["../../src/view/tennisView"], function(TennisView) {
             expect(tennisView.updateScore).toHaveBeenCalledWith("#score2", 30);
             expect(tennisView.$el.find("#score2").text()).toEqual("30");            
         }); 
+
+        it("should display winner section when winner is decided", ()=>{
+            spyOn(tennisView, "displayWinner");
+
+            tennisView.$el.find("#player1").trigger("click");
+            tennisView.$el.find("#player1").trigger("click");
+            tennisView.$el.find("#player1").trigger("click");
+            tennisView.$el.find("#player1").trigger("click");
+
+            expect(tennisView.displayWinner).toHaveBeenCalledWith("player1");           
+            expect(tennisView.$el.find("#winnerSection").is(":hidden")).toEqual(false);
+            expect(tennisView.$el.find("#winner").text()).toEqual("player1");
+
+        });
 
     });
 

@@ -7,14 +7,21 @@ define(['backbone'], function(Backbone) {
         initialize: function(tennisView) {
        		this.playerOneScore = 0;
        		this.playerTwoScore = 0;
+       		this.winner = "";
 			this.tennisView = tennisView;
         },
 
         calculateScore : function(player){
         	if(player === "player1"){
+        		if(this.playerOneScore === 40){
+					this.setWinner(player);
+				}
         		this.setPlayerOneScore();
         	}
         	else if(player === "player2"){
+        		if(this.playerTwoScore === 40){
+					this.setWinner(player);
+				}
         		this.setPlayerTwoScore();
         	}
         },
@@ -45,6 +52,11 @@ define(['backbone'], function(Backbone) {
 			}			
 
 			this.tennisView.updateScore("#score2", this.playerTwoScore);
+		},
+
+		setWinner: function(player){
+			this.winner = player;
+			this.tennisView.displayWinner(this.winner);
 		}
 
     });

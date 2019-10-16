@@ -37,6 +37,11 @@ define([
 
         playerTwoScoreCalculation: function(){
             this.tennisPresenter.calculateScore("player2");
+        },
+
+        displayWinner: function(winner){
+            this.$el.find("#winnerSection").show();
+            this.$el.find("#winner").html(winner);
         }
 
     });
