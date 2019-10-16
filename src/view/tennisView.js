@@ -23,7 +23,8 @@ define([
         },
 
         events:{
-            "click #player1" : "playerOneScoreCalculation"
+            "click #player1" : "playerOneScoreCalculation",
+            "click #player2" : "playerTwoScoreCalculation"
         },
 
         playerOneScoreCalculation: function(){
@@ -32,6 +33,10 @@ define([
 
         updateScore: function(element,playerScore){
             this.$el.find(element).html(playerScore);
+        },
+
+        playerTwoScoreCalculation: function(){
+            this.tennisPresenter.calculateScore("player2");
         }
 
     });

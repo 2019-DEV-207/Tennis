@@ -21,6 +21,17 @@ define(["../../src/presenter/tennisPresenter","../../src/view/tennisView"], func
 			expect(tennisView.updateScore).toHaveBeenCalled();
 			expect(tennisPresenter.playerOneScore).toEqual(40);
 		});
+
+		it("should calculate player2 score on click of player2 Win button", ()=>{
+
+			spyOn(tennisView, "updateScore");			
+			tennisPresenter.playerTwoScore = 15;
+			
+			tennisPresenter.calculateScore("player2");
+			
+			expect(tennisView.updateScore).toHaveBeenCalled();
+			expect(tennisPresenter.playerTwoScore).toEqual(30);
+		});
     
     });
 
