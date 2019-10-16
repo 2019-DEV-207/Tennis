@@ -13,20 +13,58 @@ define(['backbone'], function(Backbone) {
 
         calculateScore : function(player){
         	if(player === "player1"){
-        		if(this.playerOneScore === 40){
-					this.setWinner(player);
+        		if(this.playerOneScore === "A" || this.playerTwoScore === "A"){
+					this.setGameBallWinner("player1", this.playerOneScore, this.playerTwoScore);
 				}
-        		this.setPlayerOneScore();
+				else{
+					if(this.isGameInDeuce()){
+						this.findAdvantageBallWinner("player1");
+					}
+					else{
+						this.setPlayerOneScore();
+					}
+				}
         	}
         	else if(player === "player2"){
-        		if(this.playerTwoScore === 40){
-					this.setWinner(player);
+        		if( this.playerOneScore === "A" || this.playerTwoScore === "A"){
+					this.setGameBallWinner("player2", this.playerTwoScore, this.playerOneScore);
 				}
-        		this.setPlayerTwoScore();
+				else{
+					if(this.isGameInDeuce()){
+						this.findAdvantageBallWinner("player2");
+					}
+					else{
+						this.setPlayerTwoScore();
+					}
+				}
         	}
         },
 
+        isGameInDeuce: function(){
+			return (this.playerOneScore === 40 && this.playerTwoScore === 40);
+		},
+
+		findAdvantageBallWinner: function(player){
+			if(player === "player1"){
+				this.playerOneScore = "A";
+				this.tennisView.updateScore("#score1", this.playerOneScore);
+			}
+			else if(player === "player2"){
+				this.playerTwoScore = "A";
+				this.tennisView.updateScore("#score2", this.playerTwoScore);
+			}
+		},
+
+		setGameBallWinner: function(player, score1, score2){
+			if(score1 === "A" && score2 === 40){
+				this.setWinner(player);
+			}
+		},
+
         setPlayerOneScore : function(){
+			if(this.playerOneScore === 40){
+				this.setWinner("player1");
+			}
 			if(this.playerOneScore === 0){
 				this.playerOneScore = 15;
 			}
@@ -41,6 +79,9 @@ define(['backbone'], function(Backbone) {
 		},
 
 		setPlayerTwoScore : function(){
+			if(this.playerTwoScore === 40){
+				this.setWinner("player2");
+			}
 			if(this.playerTwoScore === 0){
 				this.playerTwoScore = 15;
 			}
