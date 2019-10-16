@@ -60,6 +60,31 @@ define(["../../src/presenter/tennisPresenter","../../src/view/tennisView"], func
 			expect(tennisPresenter.winner).toEqual("player1");
 
 		});
+
+		it("should set the game to deuce when player without advantage wins the ball", ()=>{
+
+			tennisPresenter.playerOneScore = "A";
+			tennisPresenter.playerTwoScore = 40;
+
+			tennisPresenter.calculateScore("player2");
+
+			expect(tennisPresenter.playerOneScore).toEqual(40);
+			expect(tennisPresenter.playerTwoScore).toEqual(40);
+
+		});
+
+		it("should decide winner when player without advantage wins the ball", ()=>{
+
+			tennisPresenter.playerOneScore = "A";
+			tennisPresenter.playerTwoScore = 40;
+
+			tennisPresenter.calculateScore("player2");
+			tennisPresenter.calculateScore("player2");
+			tennisPresenter.calculateScore("player2");
+
+			expect(tennisPresenter.winner).toEqual("player2");
+
+		});
     
     });
 

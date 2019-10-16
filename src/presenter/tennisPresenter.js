@@ -59,6 +59,11 @@ define(['backbone'], function(Backbone) {
 			if(score1 === "A" && score2 === 40){
 				this.setWinner(player);
 			}
+			else if(score1 === 40 && score2 === "A"){
+				(player === "player1") ? this.playerTwoScore = 40 : this.playerOneScore = 40;
+				this.tennisView.updateScore("#score1", this.playerOneScore);
+				this.tennisView.updateScore("#score2", this.playerTwoScore);
+			}
 		},
 
         setPlayerOneScore : function(){
