@@ -2,14 +2,25 @@ define(["../../src/presenter/tennisPresenter","../../src/view/tennisView"], func
 
     describe("Tennis Presenter", ()=> {
 
-		it("should exist on application load", ()=>{
+		let tennisView = new TennisView("#app");
+    	let	tennisPresenter = new TennisPresenter(tennisView);
 
-			let tennisView = new TennisView("#app");
-    		let	tennisPresenter = new TennisPresenter(tennisView);
+		it("should exist on application load", ()=>{
 
     		expect(tennisPresenter).toBeDefined();
     		
     	});
+
+    	it("should calculate player1 score on click of player1 Win button", ()=>{
+
+			spyOn(tennisView, "updateScore");			
+			tennisPresenter.playerOneScore = 30;
+			
+			tennisPresenter.calculateScore("player1");
+			
+			expect(tennisView.updateScore).toHaveBeenCalled();
+			expect(tennisPresenter.playerOneScore).toEqual(40);
+		});
     
     });
 

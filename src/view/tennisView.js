@@ -20,6 +20,18 @@ define([
         render: function(){
             this.$el.html(template);
             return this;
+        },
+
+        events:{
+            "click #player1" : "playerOneScoreCalculation"
+        },
+
+        playerOneScoreCalculation: function(){
+            this.tennisPresenter.calculateScore("player1");
+        },
+
+        updateScore: function(element,playerScore){
+            this.$el.find(element).html(playerScore);
         }
 
     });

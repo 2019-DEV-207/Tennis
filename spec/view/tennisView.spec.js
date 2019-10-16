@@ -23,7 +23,16 @@ define(["../../src/view/tennisView"], function(TennisView) {
    			tennisView.render();
     		
     		expect(tennisView.render()).toEqual(tennisView);
-    	});   
+    	});
+
+        it("should set player1 score when player1 Win button is clicked", ()=>{
+            spyOn(tennisView, "updateScore");
+            
+            tennisView.$el.find("#player1").trigger("click");
+            
+            expect(tennisView.updateScore).toHaveBeenCalledWith("#score1", 15);
+            expect(tennisView.$el.find("#score1").text()).toEqual("15");            
+        });  
 
     });
 
