@@ -24,7 +24,7 @@ requirejs.config({
 	}
 });
 require(['jasmine-boot'], function () {
-    require(['view/tennisView.spec'], function(){
+    require(['view/tennisView.spec', 'presenter/tennisPresenter.spec'], function(){
         window.onload();
     });
 });

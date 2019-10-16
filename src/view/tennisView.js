@@ -1,8 +1,9 @@
 define([
     'backbone',
     'jquery',
+    '../presenter/tennisPresenter',
     'text!../template/tennisTemplate.html'
-    ], function(Backbone, $, template) {
+    ], function(Backbone, $, TennisPresenter, template) {
 
     "use strict";
 
@@ -12,6 +13,7 @@ define([
 
         initialize: function(selector) {
             this.$el = $(selector);
+            this.tennisPresenter = new TennisPresenter(this);
             this.render();
         },
 
