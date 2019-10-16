@@ -8,6 +8,10 @@
 		<div id="app"></div>
 	</body>
 	<script>
-		require(['lib/require.config'], function() {});
+		require(['lib/require.config'], function() {
+		    require(['src/index'], function(Index) {
+		        new Index('#app');
+		    });
+		});
 	</script>
 </html>
