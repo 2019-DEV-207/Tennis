@@ -5,57 +5,49 @@ define(['backbone'], function(Backbone) {
     return Backbone.View.extend({
 
         initialize: function(tennisView) {
-       		this.playerOneScore = 0;
-       		this.playerTwoScore = 0;
-       		this.winner = "";
+        	this.playerOneScore = 0;
+			this.playerTwoScore = 0;
+			this.winner = "";
 			this.tennisView = tennisView;
         },
 
         calculateScore : function(player){
-        	if(player === "player1"){
-        		if(this.playerOneScore === "A" || this.playerTwoScore === "A"){
-					this.setGameBallWinner("player1", this.playerOneScore, this.playerTwoScore);
-				}
-				else{
-					if(this.isGameInDeuce()){
-						this.findAdvantageBallWinner("player1");
+        	switch(player){
+				case "player1":
+					if(this.playerOneScore === "A" || this.playerTwoScore === "A"){
+						this.setGameBallWinner("player1", this.playerOneScore, this.playerTwoScore);
 					}
 					else{
-						this.setPlayerOneScore();
+						this.isGameInDeuce() ? this.findAdvantageBallWinner("playerOneScore", "#score1") : this.setPlayerScore("playerOneScore", "player1", "#score1");
 					}
-				}
-        	}
-        	else if(player === "player2"){
-        		if( this.playerOneScore === "A" || this.playerTwoScore === "A"){
-					this.setGameBallWinner("player2", this.playerTwoScore, this.playerOneScore);
-				}
-				else{
-					if(this.isGameInDeuce()){
-						this.findAdvantageBallWinner("player2");
+					break;
+				case "player2":
+					if( this.playerOneScore === "A" || this.playerTwoScore === "A"){
+						this.setGameBallWinner("player2", this.playerTwoScore, this.playerOneScore);
 					}
 					else{
-						this.setPlayerTwoScore();
+						this.isGameInDeuce() ? this.findAdvantageBallWinner("playerTwoScore", "#score2") : this.setPlayerScore("playerTwoScore", "player2", "#score2");
 					}
-				}
-        	}
+				default:
+					break;
+			};
         },
 
         isGameInDeuce: function(){
+
 			return (this.playerOneScore === 40 && this.playerTwoScore === 40);
+
 		},
 
-		findAdvantageBallWinner: function(player){
-			if(player === "player1"){
-				this.playerOneScore = "A";
-				this.tennisView.updateScore("#score1", this.playerOneScore);
-			}
-			else if(player === "player2"){
-				this.playerTwoScore = "A";
-				this.tennisView.updateScore("#score2", this.playerTwoScore);
-			}
+		findAdvantageBallWinner: function(playerScore, element){
+
+			this[playerScore] = "A";
+			this.tennisView.updateScore(element, this[playerScore]);
+
 		},
 
 		setGameBallWinner: function(player, score1, score2){
+
 			if(score1 === "A" && score2 === 40){
 				this.setWinner(player);
 			}
@@ -64,40 +56,26 @@ define(['backbone'], function(Backbone) {
 				this.tennisView.updateScore("#score1", this.playerOneScore);
 				this.tennisView.updateScore("#score2", this.playerTwoScore);
 			}
+
 		},
 
-        setPlayerOneScore : function(){
-			if(this.playerOneScore === 40){
-				this.setWinner("player1");
+        setPlayerScore : function(playerScore, player, element){
+
+			if(this[playerScore] === 40){
+				this.setWinner(player);
 			}
-			if(this.playerOneScore === 0){
-				this.playerOneScore = 15;
+
+			if(this[playerScore] === 0){
+				this[playerScore] = 15;
 			}
-			else if(this.playerOneScore === 15){
-				this.playerOneScore = 30;
+			else if(this[playerScore] === 15){
+				this[playerScore] = 30;
 			}
-			else if(this.playerOneScore === 30){
-				this.playerOneScore = 40;
+			else if(this[playerScore] === 30){
+				this[playerScore] = 40;
 			}			
 
-			this.tennisView.updateScore("#score1", this.playerOneScore);
-		},
-
-		setPlayerTwoScore : function(){
-			if(this.playerTwoScore === 40){
-				this.setWinner("player2");
-			}
-			if(this.playerTwoScore === 0){
-				this.playerTwoScore = 15;
-			}
-			else if(this.playerTwoScore === 15){
-				this.playerTwoScore = 30;
-			}
-			else if(this.playerTwoScore === 30){
-				this.playerTwoScore = 40;
-			}			
-
-			this.tennisView.updateScore("#score2", this.playerTwoScore);
+			this.tennisView.updateScore(element, this[playerScore]);
 		},
 
 		setWinner: function(player){

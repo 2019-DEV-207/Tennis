@@ -32,7 +32,7 @@ define([
         },
 
         updateScore: function(element,playerScore){
-            this.$el.find(element).html(playerScore);
+            this.displayText(element,playerScore);
         },
 
         playerTwoScoreCalculation: function(){
@@ -41,7 +41,11 @@ define([
 
         displayWinner: function(winner){
             this.$el.find("#winnerSection").show();
-            this.$el.find("#winner").html(winner);
+            this.displayText("#winner", winner);
+        },
+        
+        displayText: function(element, value){
+            this.$el.find(element).html(value);
         }
 
     });
